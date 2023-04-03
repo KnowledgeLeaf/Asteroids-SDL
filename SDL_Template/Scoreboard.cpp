@@ -1,11 +1,12 @@
 #include "Scoreboard.h"
 
-Scoreboard::Scoreboard() 
-	: Scoreboard({230, 230, 230}) {
+Scoreboard::Scoreboard( int size) 
+	: Scoreboard({ 255, 255, 255 }, size) {
 }
 
-Scoreboard::Scoreboard(SDL_Color color) {
+Scoreboard::Scoreboard(SDL_Color color, int size) {
 	mColor = color;
+	mSize = size;
 	Score(0);
 }
 
@@ -18,7 +19,7 @@ void Scoreboard::Score(int score) {
 
 	if (score == 0) {
 		for (int i = 0; i < 2; i++) {
-			mScore.push_back(new Texture("0", "emulogic.ttf", 32, mColor));
+			mScore.push_back(new Texture("0", "HyperspaceBold-GM0g.ttf", mSize, mColor));
 			mScore[i]->Parent(this);
 			mScore[i]->Position(Vector2(-32.0f * i, 0.0f));
 		}
@@ -28,7 +29,7 @@ void Scoreboard::Score(int score) {
 		unsigned lastIndex = (unsigned)str.length() - 1;
 
 		for (unsigned i = 0; i <= lastIndex; i++) {
-			mScore.push_back(new Texture(str.substr(i, 1), "emulogic.ttf", 32, mColor));
+			mScore.push_back(new Texture(str.substr(i, 1), "HyperspaceBold-GM0g.ttf", mSize, mColor));
 			mScore[i]->Parent(this);
 			mScore[i]->Position(Vector2(-32.0f * (lastIndex - i), 0.0f));
 		}

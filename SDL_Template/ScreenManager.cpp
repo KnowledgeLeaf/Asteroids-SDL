@@ -15,15 +15,15 @@ void ScreenManager::Release() {
 	sInstance = nullptr;
 }
 
+void ScreenManager::Anykey(){
+	mCurrentScreen = Play;
+}
+
 void ScreenManager::Update() {
 
 	switch (mCurrentScreen) {
 	case Start:
 		mStartScreen->Update();
-
-		if (mInput->KeyPressed(SDL_SCANCODE_RETURN)) {
-			mCurrentScreen = Play;
-		}
 		break;
 	case Play:
 		mPlayScreen->Update();

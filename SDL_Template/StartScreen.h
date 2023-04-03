@@ -12,6 +12,9 @@ private:
 	Timer * mTimer;
 	InputManager * mInput;
 
+	float animTimer;
+	bool animTime = false;
+
 	// Top Bar Entities
 	GameEntity * mTopBar;
 	Texture * mPlayerOne;
@@ -32,7 +35,6 @@ private:
 	Texture * mCursor;
 	Vector2 mCursorStartPos;
 	Vector2 mCursorOffset;
-	int mSelectedMode;
 
 	// Bottom Bar Entities
 	GameEntity * mBottomBar;
@@ -52,8 +54,6 @@ public:
 	~StartScreen();
 
 	int SelectedMode();
-
-	void ChangeSelectedMode(int change);
 
 	void Update() override;
 	void Render() override;

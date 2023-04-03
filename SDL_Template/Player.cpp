@@ -1,6 +1,4 @@
 #include "Player.h"
-#include "BoxCollider.h"
-#include "PhysicsManager.h"
 
 void Player::HandleMovement() {
 	if (mInput->KeyDown(SDL_SCANCODE_RIGHT)) {

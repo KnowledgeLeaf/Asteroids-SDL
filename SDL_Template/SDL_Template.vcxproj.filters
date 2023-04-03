@@ -114,6 +114,9 @@
     <ClCompile Include="PhysicsManager.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Asteroid.cpp">
+      <Filter>Source Files\Galaga</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEntity.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsHelper.h">
       <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Asteroid.h">
+      <Filter>Header Files\Galaga</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

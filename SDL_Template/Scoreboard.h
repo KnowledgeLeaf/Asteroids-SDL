@@ -10,10 +10,11 @@ private:
 	std::vector<Texture *> mScore;
 
 	SDL_Color mColor;
+	int mSize;
 
 public:
-	Scoreboard();
-	Scoreboard(SDL_Color color);
+	Scoreboard(int size);
+	Scoreboard(SDL_Color color, int size);
 	~Scoreboard();
 
 	void Score(int score);

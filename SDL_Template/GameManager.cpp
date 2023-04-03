@@ -26,6 +26,15 @@ namespace SDLFramework {
 					mQuit = true;
 					break;
 				}
+				if (mEvent.type == SDL_KEYDOWN)
+				{
+					if (mInputManager->KeyDown(SDL_SCANCODE_ESCAPE))
+					{
+						mQuit = true;
+						break;
+					}
+					mScreenManager->Anykey();
+				}
 			}
 
 			if (mTimer->DeltaTime() >= 1.0f / FRAME_RATE) {
