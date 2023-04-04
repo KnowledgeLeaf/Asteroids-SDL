@@ -17,6 +17,7 @@ void ScreenManager::Release() {
 
 void ScreenManager::Anykey(){
 	mCurrentScreen = Play;
+	mStartScreen->CleanUp();
 }
 
 void ScreenManager::Update() {

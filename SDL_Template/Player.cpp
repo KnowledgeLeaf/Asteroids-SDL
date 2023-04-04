@@ -31,7 +31,7 @@ Player::Player() {
 	mScore = 0;
 	mLives = 2;
 	
-	mShip = new Texture("Asteroids.png", 1, 50, 13, 15);
+	mShip = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mShip->Parent(this);
 	mShip->Position(Vec2_Zero);
 	mShip->Scale(Vector2(2, 2));
@@ -44,7 +44,7 @@ Player::Player() {
 	mDeathAnimation->Position(Vec2_Zero);
 	mDeathAnimation->SetWrapMode(AnimatedTexture::Once);
 
-	AddCollider(new BoxCollider(Vector2(8.0f, 16.0f)));
+	AddCollider(new BoxCollider(Vector2(16.0f, 16.0f)));
 
 	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Friendly);
 }

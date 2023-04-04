@@ -23,6 +23,7 @@ public:
 	virtual ~PhysEntity();
 
 	unsigned long GetId();
+	void SetId(unsigned long value);
 
 	bool CheckCollision(PhysEntity* other);
 

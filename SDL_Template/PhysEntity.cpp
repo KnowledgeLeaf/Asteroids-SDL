@@ -53,6 +53,10 @@ unsigned long PhysEntity::GetId() {
 	return mId;
 }
 
+void PhysEntity::SetId(unsigned long value) {
+	mId = value;
+}
+
 bool PhysEntity::CheckCollision(PhysEntity* other)
 {
 	if (IgnoreCollisions() || other->IgnoreCollisions()) {

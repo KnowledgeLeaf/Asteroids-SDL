@@ -11,7 +11,7 @@ Asteroid::Asteroid()
 	asteroidTex = new Texture("Asteroids.png", 1, 118, 13, 10);
 	asteroidTex->Parent(this);
 	asteroidTex->Position(Vec2_Zero);
-	asteroidTex->Scale(Vector2(10, 10));
+	asteroidTex->Scale(Vector2(5, 5));
 
 	mMoveBounds = Vector2(0.0f, 800.0f);
 

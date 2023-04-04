@@ -3,6 +3,9 @@
 #include "AnimatedTexture.h"
 #include "InputManager.h"
 #include "Scoreboard.h"
+#include "Random.h"
+#include "Asteroid.h"
+#include "PhysicsManager.h"
 
 using namespace SDLFramework;
 
@@ -11,6 +14,7 @@ class StartScreen : public GameEntity {
 private:
 	Timer * mTimer;
 	InputManager * mInput;
+	Random * mRandom;
 
 	float animTimer;
 	bool animTime = false;
@@ -49,11 +53,18 @@ private:
 	float mAnimationTimer;
 	bool mAnimationDone;
 
+	//Asteroids
+	Asteroid* mAsteroid1;
+	Asteroid* mAsteroid2;
+	Asteroid* mAsteroid3;
+	Asteroid* mAsteroid4;
+
 public:
 	StartScreen();
 	~StartScreen();
 
 	int SelectedMode();
+	void CleanUp();
 
 	void Update() override;
 	void Render() override;

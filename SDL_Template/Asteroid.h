@@ -1,3 +1,5 @@
+#ifndef __ASTEROID_H
+#define __ASTEROID_H
 #include "PhysEntity.h"
 #include "Random.h"
 #include "BoxCollider.h"
@@ -26,3 +28,4 @@ public:
 	void Update() override;
 	void Render() override;
 };
+#endif
