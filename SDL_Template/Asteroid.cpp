@@ -8,9 +8,16 @@ void Asteroid::HandleMovement()
 
 Asteroid::Asteroid()
 {
-	asteroidTex = new Texture("PlayerShips.png", 0, 0, 60, 64);
+	asteroidTex = new Texture("Asteroids.png", 1, 118, 13, 10);
+	asteroidTex->Parent(this);
+	asteroidTex->Position(Vec2_Zero);
+	asteroidTex->Scale(Vector2(10, 10));
 
 	mMoveBounds = Vector2(0.0f, 800.0f);
+
+	AddCollider(new BoxCollider(Vector2(16.0f, 67.0f)));
+
+	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Hostile);
 }
 Asteroid::~Asteroid()
 {

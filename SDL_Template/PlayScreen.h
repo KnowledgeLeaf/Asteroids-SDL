@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include "AudioManager.h"
 #include "Player.h"
+#include "Asteroid.h"
 
 class PlayScreen : public GameEntity {
 private:
@@ -10,7 +11,7 @@ private:
 	AudioManager * mAudio;
 
 	Player * mPlayer;
-
+	Asteroid * mAsteroid;
 
 
 public:
