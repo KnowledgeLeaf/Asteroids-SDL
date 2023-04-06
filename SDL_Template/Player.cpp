@@ -8,8 +8,12 @@ void Player::HandleMovement() {
 		Rotate(-150.0f * mTimer->DeltaTime());
 	}
 
-	if (mInput->KeyDown(SDL_SCANCODE_SPACE)) {
+	if (mInput->KeyDown(SDL_SCANCODE_UP)) {
 		Translate(-Vec2_Up * mMoveSpeed * mTimer->DeltaTime(), Local);
+	}
+
+	if (mInput->KeyDown(SDL_SCANCODE_SPACE)) {
+	//	shoot();
 	}
 
 	Vector2 pos = Position(Local);
