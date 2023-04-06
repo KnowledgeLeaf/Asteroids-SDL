@@ -4,6 +4,7 @@
 #include "AudioManager.h"
 #include "Player.h"
 #include "Asteroid.h"
+#include "Scoreboard.h"
 
 class PlayScreen : public GameEntity {
 private:
@@ -12,7 +13,11 @@ private:
 
 	Player * mPlayer;
 	Asteroid * mAsteroid;
-
+	Texture* mHiScore;
+	GameEntity* mTopBar;
+	Scoreboard* mPlayerOneScore;
+	Scoreboard* mPlayerTwoScore;
+	Scoreboard* mTopScore;
 
 public:
 	PlayScreen();

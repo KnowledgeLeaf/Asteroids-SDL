@@ -21,9 +21,6 @@ private:
 
 	// Top Bar Entities
 	GameEntity * mTopBar;
-	Texture * mPlayerOne;
-	Texture * mPlayerTwo;
-	Texture * mHiScore;
 	Scoreboard * mPlayerOneScore;
 	Scoreboard * mPlayerTwoScore;
 	Scoreboard * mTopScore;

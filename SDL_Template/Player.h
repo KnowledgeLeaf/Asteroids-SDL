@@ -14,7 +14,11 @@ private:
 	Timer * mTimer;
 	InputManager * mInput;
 	AudioManager * mAudio;
-
+	
+	Vector2 mVelocity;
+	Vector2 mMoveBoundsHorizontal;
+	Vector2 mMoveBoundsVertical;
+	
 	bool mVisible;
 	bool mAnimating;
 	bool mWasHit;
@@ -26,7 +30,7 @@ private:
 	AnimatedTexture * mDeathAnimation;
 
 	float mMoveSpeed;
-	Vector2 mMoveBounds;
+	
 
 private:
 	void HandleMovement();

@@ -2,19 +2,30 @@
 
 void Player::HandleMovement() {
 	if (mInput->KeyDown(SDL_SCANCODE_RIGHT)) {
-		Translate(Vec2_Right * mMoveSpeed * mTimer->DeltaTime(), World);
+		Rotate(150.0f * mTimer->DeltaTime());
 	}
 	else if (mInput->KeyDown(SDL_SCANCODE_LEFT)) {
-		Translate(-Vec2_Right * mMoveSpeed * mTimer->DeltaTime(), World);
+		Rotate(-150.0f * mTimer->DeltaTime());
+	}
+
+	if (mInput->KeyDown(SDL_SCANCODE_SPACE)) {
+		Translate(-Vec2_Up * mMoveSpeed * mTimer->DeltaTime(), Local);
 	}
 
 	Vector2 pos = Position(Local);
-	if (pos.x < mMoveBounds.x) {
-		pos.x = mMoveBounds.x;
+	if (pos.x < mMoveBoundsHorizontal.x) {
+		pos.x = mMoveBoundsHorizontal.y;
 	}
-	else if (pos.x > mMoveBounds.y) {
-		pos.x = mMoveBounds.y;
+	else if (pos.x > mMoveBoundsHorizontal.y) {
+		pos.x = mMoveBoundsHorizontal.x;
 	}
+	if (pos.y < mMoveBoundsVertical.x) {
+		pos.y = mMoveBoundsVertical.y;
+	}
+	else if (pos.y > mMoveBoundsVertical.y) {
+		pos.y = mMoveBoundsVertical.x;
+	}
+	
 
 	Position(pos);
 }
@@ -37,8 +48,8 @@ Player::Player() {
 	mShip->Scale(Vector2(2, 2));
 
 	mMoveSpeed = 300.0f;
-	mMoveBounds = Vector2(0.0f, Graphics::SCREEN_WIDTH);
-
+	mMoveBoundsHorizontal = Vector2(0.0f, Graphics::SCREEN_WIDTH);
+	mMoveBoundsVertical = Vector2(0.0f, Graphics::SCREEN_HEIGHT);
 	mDeathAnimation = new AnimatedTexture("PlayerExplosion.png", 0, 0, 128, 128, 4, 1.0f, AnimatedTexture::Horizontal);
 	mDeathAnimation->Parent(this);
 	mDeathAnimation->Position(Vec2_Zero);
