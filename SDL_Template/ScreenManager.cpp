@@ -16,8 +16,13 @@ void ScreenManager::Release() {
 }
 
 void ScreenManager::Anykey(){
-	mCurrentScreen = Play;
-	mStartScreen->CleanUp();
+	if (!mStarted)
+	{
+		mCurrentScreen = Play;
+		mStartScreen->CleanUp();
+		mPlayScreen->Start();
+		mStarted = true;
+	}
 }
 
 void ScreenManager::Update() {
@@ -33,8 +38,6 @@ void ScreenManager::Update() {
 }
 
 void ScreenManager::Render() { 
-
-
 	switch (mCurrentScreen) {
 	case Start:
 		mStartScreen->Render();
@@ -53,6 +56,7 @@ ScreenManager::ScreenManager() {
 	mPlayScreen = new PlayScreen();
 
 	mCurrentScreen = Start;
+	mStarted = false;
 }
 
 ScreenManager::~ScreenManager() {

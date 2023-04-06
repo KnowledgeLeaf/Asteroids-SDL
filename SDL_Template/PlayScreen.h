@@ -18,6 +18,7 @@ public:
 	PlayScreen();
 	~PlayScreen();
 
+	void Start();
 	void Update() override;
 	void Render() override;
 };

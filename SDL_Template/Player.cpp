@@ -37,7 +37,7 @@ Player::Player() {
 	mShip->Scale(Vector2(2, 2));
 
 	mMoveSpeed = 300.0f;
-	mMoveBounds = Vector2(0.0f, 800.0f);
+	mMoveBounds = Vector2(0.0f, Graphics::SCREEN_WIDTH);
 
 	mDeathAnimation = new AnimatedTexture("PlayerExplosion.png", 0, 0, 128, 128, 4, 1.0f, AnimatedTexture::Horizontal);
 	mDeathAnimation->Parent(this);

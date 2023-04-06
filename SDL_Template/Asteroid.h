@@ -4,18 +4,22 @@
 #include "Random.h"
 #include "BoxCollider.h"
 #include "PhysicsManager.h"
+#include "Timer.h"
 
 using namespace SDLFramework;
 
 class Asteroid : public PhysEntity
 {
 private:
+	Timer * mTimer;
+	Random * mRandom;
 
-	Texture* asteroidTex;
+	Texture * asteroidTex;
 
 	float mMoveSpeed;
-	Vector2 mMoveDirection;
-	Vector2 mMoveBounds;
+	Vector2 mVelocity;
+	Vector2 mMoveBoundsHorizontal;
+	Vector2 mMoveBoundsVertical;
 
 	void HandleMovement();
 

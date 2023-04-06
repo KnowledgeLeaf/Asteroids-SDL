@@ -14,6 +14,7 @@ private:
 
 	StartScreen * mStartScreen;
 	PlayScreen * mPlayScreen;
+	bool mStarted;
 
 public:
 	static ScreenManager * Instance();
