@@ -7,16 +7,28 @@ PlayScreen::PlayScreen() {
 	mTopBar = new GameEntity(Graphics::SCREEN_WIDTH * 0.5f, 80.5f);
 	mPlayerOneScore = new Scoreboard(28);
 	mTopScore = new Scoreboard(16);
+	mLifeOne = new Texture("Asteroids.png", 0, 50, 13, 15);
+	mLifeTwo = new Texture("Asteroids.png", 0, 50, 13, 15);
+	mLifeThree = new Texture("Asteroids.png", 0, 50, 13, 15);
 
 	mTopBar->Parent(this);
 	mPlayerOneScore->Parent(mTopBar);
 	mTopScore->Parent(mTopBar);
+	mLifeOne->Parent(mTopBar);
+	mLifeTwo->Parent(mTopBar);
+	mLifeThree->Parent(mTopBar);
 
 	mPlayerOneScore->Position(-Graphics::SCREEN_WIDTH * 0.38f, 40.0f);
 	mTopScore->Position(Graphics::SCREEN_WIDTH * 0.05f, 40.0f);
+	mLifeOne->Position(-Graphics::SCREEN_WIDTH * 0.42f, 70.0f);
+	mLifeTwo->Position(-Graphics::SCREEN_WIDTH * 0.40f, 70.0f);
+	mLifeThree->Position(-Graphics::SCREEN_WIDTH * 0.38f, 70.0f);
+
+	mLifeOne->Scale(Vector2(2, 2));
+	mLifeTwo->Scale(Vector2(2, 2));
+	mLifeThree->Scale(Vector2(2, 2));
 
 	mTopScore->Score(00);
-
 }
 
 PlayScreen::~PlayScreen() {
@@ -35,6 +47,13 @@ PlayScreen::~PlayScreen() {
 	mPlayerOneScore = nullptr;
 	delete mTopScore;
 	mTopScore = nullptr;
+
+	delete mLifeOne;
+	mLifeOne = nullptr;
+	delete mLifeTwo;
+	mLifeTwo = nullptr;
+	delete mLifeThree;
+	mLifeThree = nullptr;
 }
 
 void PlayScreen::Start()
@@ -54,6 +73,13 @@ void PlayScreen::Start()
 }
 
 void PlayScreen::Update() {
+	mPlayerOneScore->Update();
+	mTopScore->Update();
+
+	mLifeOne->Update();
+	mLifeTwo->Update();
+	mLifeThree->Update();
+
 	mPlayer->Update();
 	mAsteroid->Update();
 }
@@ -61,6 +87,10 @@ void PlayScreen::Update() {
 void PlayScreen::Render() {
 	mPlayerOneScore->Render();
 	mTopScore->Render();
+
+	mLifeOne->Render();
+	mLifeTwo->Render();
+	mLifeThree->Render();
 	
 	mPlayer->Render();
 	mAsteroid->Render();

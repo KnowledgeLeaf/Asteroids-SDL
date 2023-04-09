@@ -16,6 +16,9 @@ private:
 	Texture* mHiScore;
 	GameEntity* mTopBar;
 	Scoreboard* mPlayerOneScore;
+	Texture* mLifeOne;
+	Texture* mLifeTwo;
+	Texture* mLifeThree;
 	Scoreboard* mPlayerTwoScore;
 	Scoreboard* mTopScore;
 
