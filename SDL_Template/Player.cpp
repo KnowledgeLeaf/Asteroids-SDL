@@ -46,6 +46,8 @@ Player::Player() {
 	mLives = 3;
 
 	mInvincibilityTime = 3;
+	mInvincibilityTimer = 0;
+	mInvincible = false;
 	
 	mShip = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mShip->Parent(this);
