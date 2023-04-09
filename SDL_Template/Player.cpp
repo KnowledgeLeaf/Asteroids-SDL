@@ -44,6 +44,8 @@ Player::Player() {
 
 	mScore = 0;
 	mLives = 3;
+
+	mInvincibilityTime = 3;
 	
 	mShip = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mShip->Parent(this);
@@ -53,12 +55,13 @@ Player::Player() {
 	mMoveSpeed = 300.0f;
 	mMoveBoundsHorizontal = Vector2(0.0f, Graphics::SCREEN_WIDTH);
 	mMoveBoundsVertical = Vector2(0.0f, Graphics::SCREEN_HEIGHT);
-	mDeathAnimation = new AnimatedTexture("PlayerExplosion.png", 0, 0, 128, 128, 4, 1.0f, AnimatedTexture::Horizontal);
+	mDeathAnimation = new AnimatedTexture("Asteroids.png", 0, 60, 13, 15, 9, 1.0f, AnimatedTexture::Horizontal);
 	mDeathAnimation->Parent(this);
 	mDeathAnimation->Position(Vec2_Zero);
+	mDeathAnimation->Scale(Vector2(2, 2));
 	mDeathAnimation->SetWrapMode(AnimatedTexture::Once);
 
-	AddCollider(new BoxCollider(Vector2(16.0f, 16.0f)));
+	AddCollider(mCollider = new BoxCollider(Vector2(16.0f, 16.0f)));
 
 	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Friendly);
 }
@@ -107,6 +110,7 @@ void Player::Hit(PhysEntity * other) {
 	mDeathAnimation->ResetAnimation();
 	mAudio->PlaySFX("SFX/PlayerExplosion.wav");
 	mWasHit = true;
+	mInvincible = true;
 }
 
 bool Player::WasHit() {
@@ -117,6 +121,8 @@ void Player::Update() {
 	if (mAnimating) {
 
 		if (mWasHit) {
+			this->Position(Graphics::SCREEN_HEIGHT / 2, Graphics::SCREEN_WIDTH / 2);
+			PhysicsManager::Instance()->UnregisterEntity(mId);
 			mWasHit = false;
 		}
 
@@ -126,6 +132,17 @@ void Player::Update() {
 	else {
 		if (Active()) {
 			HandleMovement();
+		}
+	}
+
+	if (mInvincible)
+	{
+		mInvincibilityTimer += mTimer->DeltaTime();
+		if (mInvincibilityTimer >= mInvincibilityTime)
+		{
+			mInvincible = false;
+			mInvincibilityTimer = 0;
+			mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Friendly);
 		}
 	}
 }

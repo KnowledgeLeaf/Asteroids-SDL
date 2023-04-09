@@ -88,9 +88,18 @@ void PlayScreen::Render() {
 	mPlayerOneScore->Render();
 	mTopScore->Render();
 
-	mLifeOne->Render();
-	mLifeTwo->Render();
-	mLifeThree->Render();
+	if (mPlayer->Lives() >= 1)
+	{
+		mLifeOne->Render();
+		if (mPlayer->Lives() >= 2)
+		{
+			mLifeTwo->Render();
+			if (mPlayer->Lives() >= 3)
+			{
+				mLifeThree->Render();
+			}
+		}
+	}
 	
 	mPlayer->Render();
 	mAsteroid->Render();

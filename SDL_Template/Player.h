@@ -28,8 +28,12 @@ private:
 
 	Texture * mShip;
 	AnimatedTexture * mDeathAnimation;
+	Collider * mCollider;
 
 	float mMoveSpeed;
+	float mInvincibilityTime;
+	float mInvincibilityTimer;
+	bool mInvincible;
 	
 
 private:
