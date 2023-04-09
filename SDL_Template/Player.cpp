@@ -30,7 +30,6 @@ void Player::HandleMovement() {
 		pos.y = mMoveBoundsVertical.x;
 	}
 	
-
 	Position(pos);
 }
 
@@ -44,7 +43,7 @@ Player::Player() {
 	mWasHit = false;
 
 	mScore = 0;
-	mLives = 2;
+	mLives = 3;
 	
 	mShip = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mShip->Parent(this);
