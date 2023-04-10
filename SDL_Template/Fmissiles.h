@@ -1,0 +1,27 @@
+#ifndef __Fmissiles_H
+#define __Fmissiles_H
+#include "PhysEntity.h"
+#include "BoxCollider.h"
+#include "PhysicsManager.h"
+#include "AnimatedTexture.h"
+
+using namespace SDLFramework;
+
+class Fmissiles :public PhysEntity {
+
+private:
+	Timer* mTimer;
+	float mMoveSpeed; 
+	Vector2 mMoveBoundsHorizontal;
+	Vector2 mMoveBoundsVertical;
+	void HandleMovement();
+
+public:
+	bool IgnoreCollisions() override;
+	void Hit(PhysEntity* other) override;
+	void Update() override;
+	void Render() override;
+
+};
+
+#endif 

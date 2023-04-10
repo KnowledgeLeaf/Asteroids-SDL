@@ -12,10 +12,6 @@ void Player::HandleMovement() {
 		Translate(-Vec2_Up * mMoveSpeed * mTimer->DeltaTime(), Local);
 	}
 
-	if (mInput->KeyDown(SDL_SCANCODE_SPACE)) {
-	//	shoot();
-	}
-
 	Vector2 pos = Position(Local);
 	if (pos.x < mMoveBoundsHorizontal.x) {
 		pos.x = mMoveBoundsHorizontal.y;
@@ -31,6 +27,12 @@ void Player::HandleMovement() {
 	}
 	
 	Position(pos);
+}
+
+void Player::HandleFiring() {
+	if (mInput->KeyDown(SDL_SCANCODE_SPACE)) {
+		//shoot;
+	}
 }
 
 Player::Player() {

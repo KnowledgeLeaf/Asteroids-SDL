@@ -32,11 +32,18 @@ Asteroid::Asteroid()
 
 	mVelocity.x = mRandom->RandomRange(-1.0f, 1.0f);
 	mVelocity.y = mRandom->RandomRange(-1.0f, 1.0f);
+	
+	mAsteroidTextRand = mRandom->RandomRange(0, 3);
 
-	asteroidTex = new Texture("Asteroids.png", 1, 118, 13, 10);
+	mSpritePos.push_back(1);
+	mSpritePos.push_back(32);
+	mSpritePos.push_back(62); 
+	mSpritePos.push_back(94);
+
+	asteroidTex = new Texture("Asteroids.png",mSpritePos[mAsteroidTextRand], 90, 26, 26);
 	asteroidTex->Parent(this);
 	asteroidTex->Position(Vec2_Zero);
-	asteroidTex->Scale(Vector2(5, 5));
+	asteroidTex->Scale(Vector2(3,3));
 
 	mMoveBoundsHorizontal = Vector2(0.0f, Graphics::SCREEN_WIDTH);
 	mMoveBoundsVertical = Vector2(0.0f, Graphics::SCREEN_HEIGHT);

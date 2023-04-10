@@ -38,8 +38,14 @@ PlayScreen::~PlayScreen() {
 	delete mPlayer;
 	mPlayer = nullptr;
 
-	delete mAsteroid;
-	mAsteroid = nullptr;
+	delete mAsteroid1;
+	mAsteroid1 = nullptr;
+	delete mAsteroid2;
+	mAsteroid2 = nullptr; 
+	delete mAsteroid3;
+	mAsteroid3 = nullptr;
+	delete mAsteroid4;
+	mAsteroid4 = nullptr;
 
 	delete mTopBar;
 	mTopBar = nullptr;
@@ -64,12 +70,31 @@ void PlayScreen::Start()
 	mPlayer->Position(Graphics::SCREEN_WIDTH * 0.4f, Graphics::SCREEN_HEIGHT * 0.8f);
 	mPlayer->Active(true);
 
-	delete mAsteroid;
-	mAsteroid = new Asteroid();
-	mAsteroid->Parent(this);
-	mAsteroid->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
-	mAsteroid->Active(true);
-	mAsteroid->SetId(PhysicsManager::Instance()->RegisterEntity(mAsteroid, PhysicsManager::CollisionLayers::Hostile));
+	delete mAsteroid1;
+	mAsteroid1 = new Asteroid();
+	mAsteroid1->Parent(this);
+	mAsteroid1->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
+	mAsteroid1->Active(true);
+	mAsteroid1->SetId(PhysicsManager::Instance()->RegisterEntity(mAsteroid1, PhysicsManager::CollisionLayers::Hostile));
+	delete mAsteroid2;
+	mAsteroid2 = new Asteroid();
+	mAsteroid2->Parent(this);
+	mAsteroid2->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
+	mAsteroid2->Active(true);
+	mAsteroid2->SetId(PhysicsManager::Instance()->RegisterEntity(mAsteroid2, PhysicsManager::CollisionLayers::Hostile));
+	delete mAsteroid3;
+	mAsteroid3 = new Asteroid();
+	mAsteroid3->Parent(this);
+	mAsteroid3->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
+	mAsteroid3->Active(true);
+	mAsteroid3->SetId(PhysicsManager::Instance()->RegisterEntity(mAsteroid3, PhysicsManager::CollisionLayers::Hostile));
+	delete mAsteroid4;
+	mAsteroid4 = new Asteroid();
+	mAsteroid4->Parent(this);
+	mAsteroid4->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
+	mAsteroid4->Active(true);
+	mAsteroid4->SetId(PhysicsManager::Instance()->RegisterEntity(mAsteroid4, PhysicsManager::CollisionLayers::Hostile));
+
 }
 
 void PlayScreen::Update() {
@@ -81,7 +106,10 @@ void PlayScreen::Update() {
 	mLifeThree->Update();
 
 	mPlayer->Update();
-	mAsteroid->Update();
+	mAsteroid1->Update(); 
+	mAsteroid2->Update();
+	mAsteroid3->Update(); 
+	mAsteroid4->Update();
 }
 
 void PlayScreen::Render() {
@@ -102,6 +130,9 @@ void PlayScreen::Render() {
 	}
 	
 	mPlayer->Render();
-	mAsteroid->Render();
+	mAsteroid1->Render();
+	mAsteroid2->Render();
+	mAsteroid3->Render(); 
+	mAsteroid4->Render();
 	
 }

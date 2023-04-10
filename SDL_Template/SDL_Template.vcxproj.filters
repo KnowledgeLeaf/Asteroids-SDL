@@ -117,6 +117,9 @@
     <ClCompile Include="Asteroid.cpp">
       <Filter>Source Files\Galaga</Filter>
     </ClCompile>
+    <ClCompile Include="Fmissiles.cpp">
+      <Filter>Source Files\Galaga</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEntity.h">
@@ -192,6 +195,9 @@
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Asteroid.h">
+      <Filter>Header Files\Galaga</Filter>
+    </ClInclude>
+    <ClInclude Include="Fmissiles.h">
       <Filter>Header Files\Galaga</Filter>
     </ClInclude>
   </ItemGroup>

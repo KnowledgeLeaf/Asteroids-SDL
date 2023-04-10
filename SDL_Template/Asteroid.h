@@ -5,6 +5,7 @@
 #include "BoxCollider.h"
 #include "PhysicsManager.h"
 #include "Timer.h"
+#include <vector>
 
 using namespace SDLFramework;
 
@@ -20,6 +21,8 @@ private:
 	Vector2 mVelocity;
 	Vector2 mMoveBoundsHorizontal;
 	Vector2 mMoveBoundsVertical;
+	int mAsteroidTextRand;
+	std::vector<int> mSpritePos;
 
 	void HandleMovement();
 

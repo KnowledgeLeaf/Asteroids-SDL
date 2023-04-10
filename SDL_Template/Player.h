@@ -6,6 +6,7 @@
 #include "PhysEntity.h"
 #include "BoxCollider.h"
 #include "PhysicsManager.h"
+#include "Fmissiles.h"
 
 using namespace SDLFramework;
 
@@ -38,6 +39,7 @@ private:
 
 private:
 	void HandleMovement();
+	void HandleFiring();
 
 public:
 	Player();

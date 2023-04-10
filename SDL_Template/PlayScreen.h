@@ -12,15 +12,18 @@ private:
 	AudioManager * mAudio;
 
 	Player * mPlayer;
-	Asteroid * mAsteroid;
+	Asteroid * mAsteroid1;
+	Asteroid * mAsteroid2; 
+	Asteroid * mAsteroid3; 
+	Asteroid * mAsteroid4;
 	Texture* mHiScore;
 	GameEntity* mTopBar;
 	Scoreboard* mPlayerOneScore;
+	Scoreboard* mPlayerTwoScore;
+	Scoreboard* mTopScore;
 	Texture* mLifeOne;
 	Texture* mLifeTwo;
 	Texture* mLifeThree;
-	Scoreboard* mPlayerTwoScore;
-	Scoreboard* mTopScore;
 
 public:
 	PlayScreen();
@@ -29,5 +32,6 @@ public:
 	void Start();
 	void Update() override;
 	void Render() override;
+
 };
 #endif
