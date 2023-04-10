@@ -134,5 +134,5 @@ void PlayScreen::Render() {
 	mAsteroid2->Render();
 	mAsteroid3->Render(); 
 	mAsteroid4->Render();
-	
+
 }

@@ -31,7 +31,10 @@ void Player::HandleMovement() {
 
 void Player::HandleFiring() {
 	if (mInput->KeyDown(SDL_SCANCODE_SPACE)) {
-		//shoot;
+		missile = new Fmissiles();
+		missile->Position(Position());
+		missile->Rotation(Rotation());
+		std::cout << "FIRE!";
 	}
 }
 
@@ -136,6 +139,7 @@ void Player::Update() {
 	else {
 		if (Active()) {
 			HandleMovement();
+			HandleFiring();
 		}
 	}
 
@@ -160,6 +164,6 @@ void Player::Render() {
 			mShip->Render();
 		}
 	}
-
+	missile->Render();
 	PhysEntity::Render();
 }

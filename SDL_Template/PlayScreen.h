@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Asteroid.h"
 #include "Scoreboard.h"
+#include "Fmissiles.h"
 
 class PlayScreen : public GameEntity {
 private:

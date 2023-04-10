@@ -15,9 +15,11 @@ private:
 	Vector2 mMoveBoundsHorizontal;
 	Vector2 mMoveBoundsVertical;
 	void HandleMovement();
+	Texture* mTexture;
 
 public:
-	bool IgnoreCollisions() override;
+	Fmissiles();
+	~Fmissiles();
 	void Hit(PhysEntity* other) override;
 	void Update() override;
 	void Render() override;

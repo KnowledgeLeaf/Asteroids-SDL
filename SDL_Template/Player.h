@@ -19,7 +19,8 @@ private:
 	Vector2 mVelocity;
 	Vector2 mMoveBoundsHorizontal;
 	Vector2 mMoveBoundsVertical;
-	
+	Fmissiles* missile;
+
 	bool mVisible;
 	bool mAnimating;
 	bool mWasHit;
@@ -40,6 +41,7 @@ private:
 private:
 	void HandleMovement();
 	void HandleFiring();
+	
 
 public:
 	Player();
