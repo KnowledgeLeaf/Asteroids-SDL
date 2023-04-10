@@ -3,7 +3,7 @@
 Fmissiles::Fmissiles(){
 
 
-	mTexture = new Texture("Asteroids.png", 40, 62, 20, 20);
+	mTexture = new Texture("Asteroids.png", 0, 50, 13, 15);
 	
 
 }

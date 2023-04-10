@@ -139,10 +139,10 @@ void Player::Update() {
 	else {
 		if (Active()) {
 			HandleMovement();
-			HandleFiring();
+			HandleFiring();		
 		}
 	}
-
+	missile->Update();
 	if (mInvincible)
 	{
 		mInvincibilityTimer += mTimer->DeltaTime();
