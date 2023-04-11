@@ -136,13 +136,19 @@ void Player::Update() {
 		mDeathAnimation->Update();
 		mAnimating = mDeathAnimation->IsAnimating();
 	}
+
 	else {
 		if (Active()) {
 			HandleMovement();
 			HandleFiring();		
 		}
 	}
-	missile->Update();
+
+	if (missile != nullptr)
+	{
+		missile->Update();
+	}
+
 	if (mInvincible)
 	{
 		mInvincibilityTimer += mTimer->DeltaTime();
@@ -164,6 +170,9 @@ void Player::Render() {
 			mShip->Render();
 		}
 	}
-	missile->Render();
+	if (missile != nullptr)
+	{
+		missile->Render();
+	}
 	PhysEntity::Render();
 }

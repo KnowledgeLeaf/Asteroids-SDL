@@ -4,6 +4,7 @@
 #include "BoxCollider.h"
 #include "PhysicsManager.h"
 #include "AnimatedTexture.h"
+#include "Timer.h"
 
 using namespace SDLFramework;
 
@@ -11,7 +12,7 @@ class Fmissiles :public PhysEntity {
 
 private:
 	Timer* mTimer;
-	float mMoveSpeed; 
+	float mSpeed;
 	Vector2 mMoveBoundsHorizontal;
 	Vector2 mMoveBoundsVertical;
 	void HandleMovement();

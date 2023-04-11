@@ -3,7 +3,8 @@
 void Asteroid::HandleMovement()
 {
 	Position(Position() + mVelocity);
-
+	
+	//teleport code
 	if (Position().x > mMoveBoundsHorizontal.y)
 	{
 		Position(mMoveBoundsHorizontal.x, Position().y);
