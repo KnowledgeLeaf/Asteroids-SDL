@@ -1,29 +1,5 @@
 #include "Asteroid.h"
 
-void Asteroid::HandleMovement()
-{
-	Position(Position() + mVelocity);
-	
-	//teleport code
-	if (Position().x > mMoveBoundsHorizontal.y)
-	{
-		Position(mMoveBoundsHorizontal.x, Position().y);
-	}
-	else if (Position().x < mMoveBoundsHorizontal.x)
-	{
-		Position(mMoveBoundsHorizontal.y, Position().y);
-	}
-
-	if (Position().y > mMoveBoundsVertical.y)
-	{
-		Position(Position().x, mMoveBoundsVertical.x);
-	}
-	else if (Position().y < mMoveBoundsVertical.x)
-	{
-		Position(Position().x, mMoveBoundsVertical.y);
-	}
-}
-
 Asteroid::Asteroid()
 {
 	mTimer = Timer::Instance();
@@ -57,6 +33,30 @@ Asteroid::~Asteroid()
 {
 	asteroidTex = nullptr;
 	delete asteroidTex;
+}
+
+void Asteroid::HandleMovement()
+{
+	Position(Position() + mVelocity);
+
+	//teleport code
+	if (Position().x > mMoveBoundsHorizontal.y)
+	{
+		Position(mMoveBoundsHorizontal.x, Position().y);
+	}
+	else if (Position().x < mMoveBoundsHorizontal.x)
+	{
+		Position(mMoveBoundsHorizontal.y, Position().y);
+	}
+
+	if (Position().y > mMoveBoundsVertical.y)
+	{
+		Position(Position().x, mMoveBoundsVertical.x);
+	}
+	else if (Position().y < mMoveBoundsVertical.x)
+	{
+		Position(Position().x, mMoveBoundsVertical.y);
+	}
 }
 
 void Asteroid::Hit(PhysEntity* other)

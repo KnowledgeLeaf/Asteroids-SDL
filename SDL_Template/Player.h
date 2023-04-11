@@ -19,12 +19,13 @@ private:
 	Vector2 mVelocity;
 	Vector2 mMoveBoundsHorizontal;
 	Vector2 mMoveBoundsVertical;
-	Fmissiles* missile;
+	
 
 	bool mVisible;
 	bool mAnimating;
 	bool mWasHit;
-
+	static const int MAX_MISSILES = 4;
+	Fmissiles* mFmissiles[MAX_MISSILES];
 	int mScore;
 	int mLives;
 

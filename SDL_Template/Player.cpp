@@ -1,43 +1,5 @@
 #include "Player.h"
 
-void Player::HandleMovement() {
-	if (mInput->KeyDown(SDL_SCANCODE_RIGHT)) {
-		Rotate(150.0f * mTimer->DeltaTime());
-	}
-	else if (mInput->KeyDown(SDL_SCANCODE_LEFT)) {
-		Rotate(-150.0f * mTimer->DeltaTime());
-	}
-
-	if (mInput->KeyDown(SDL_SCANCODE_UP)) {
-		Translate(-Vec2_Up * mMoveSpeed * mTimer->DeltaTime(), Local);
-	}
-
-	Vector2 pos = Position(Local);
-	if (pos.x < mMoveBoundsHorizontal.x) {
-		pos.x = mMoveBoundsHorizontal.y;
-	}
-	else if (pos.x > mMoveBoundsHorizontal.y) {
-		pos.x = mMoveBoundsHorizontal.x;
-	}
-	if (pos.y < mMoveBoundsVertical.x) {
-		pos.y = mMoveBoundsVertical.y;
-	}
-	else if (pos.y > mMoveBoundsVertical.y) {
-		pos.y = mMoveBoundsVertical.x;
-	}
-	
-	Position(pos);
-}
-
-void Player::HandleFiring() {
-	if (mInput->KeyDown(SDL_SCANCODE_SPACE)) {
-		missile = new Fmissiles();
-		missile->Position(Position());
-		missile->Rotation(Rotation());
-		std::cout << "FIRE!";
-	}
-}
-
 Player::Player() {
 	mTimer = Timer::Instance();
 	mInput = InputManager::Instance();
@@ -71,6 +33,10 @@ Player::Player() {
 	AddCollider(mCollider = new BoxCollider(Vector2(16.0f, 16.0f)));
 
 	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Friendly);
+
+	for (int i = 0; i < MAX_MISSILES; ++i) {
+		mFmissiles[i] = new Fmissiles();
+	}
 }
 
 Player::~Player() {
@@ -84,31 +50,75 @@ Player::~Player() {
 	delete mDeathAnimation;
 	mDeathAnimation = nullptr;
 
-}
-
-void Player::Visible(bool visible) {
-	mVisible = visible;
-}
-
-bool Player::IsAnimating() {
-	return mAnimating;
+	for (int i = 0; i < MAX_MISSILES; ++i) {
+		delete mFmissiles[i];
+		mFmissiles[i] = nullptr;
+	}
 }
 
 int Player::Score() {
 	return mScore;
 }
-
 int Player::Lives() {
 	return mLives;
+}
+
+bool Player::IgnoreCollisions()
+{
+	return !mVisible || mAnimating;
+}
+bool Player::WasHit() {
+	return mWasHit;
+}
+bool Player::IsAnimating() {
+	return mAnimating;
 }
 
 void Player::AddScore(int change) {
 	mScore += change;
 }
 
-bool Player::IgnoreCollisions()
-{
-	return !mVisible || mAnimating;
+void Player::HandleFiring() {
+	if (mInput->KeyPressed(SDL_SCANCODE_SPACE)) {
+		for (int i = 0; i < MAX_MISSILES; ++i) {
+			if (!mFmissiles[i]->Active()) {
+				mFmissiles[i]->Fire(Position());
+				mFmissiles[i]->Rotation(Rotation());
+				//mAudio->PlaySFX("SFX/Fire.wav", 0, -1);
+				std::cout << "FIRE!";
+				break;
+			}
+		}
+	}
+}
+
+void Player::HandleMovement() {
+	if (mInput->KeyDown(SDL_SCANCODE_RIGHT)) {
+		Rotate(150.0f * mTimer->DeltaTime());
+	}
+	else if (mInput->KeyDown(SDL_SCANCODE_LEFT)) {
+		Rotate(-150.0f * mTimer->DeltaTime());
+	}
+
+	if (mInput->KeyDown(SDL_SCANCODE_UP)) {
+		Translate(-Vec2_Up * mMoveSpeed * mTimer->DeltaTime(), Local);
+	}
+
+	Vector2 pos = Position(Local);
+	if (pos.x < mMoveBoundsHorizontal.x) {
+		pos.x = mMoveBoundsHorizontal.y;
+	}
+	else if (pos.x > mMoveBoundsHorizontal.y) {
+		pos.x = mMoveBoundsHorizontal.x;
+	}
+	if (pos.y < mMoveBoundsVertical.x) {
+		pos.y = mMoveBoundsVertical.y;
+	}
+	else if (pos.y > mMoveBoundsVertical.y) {
+		pos.y = mMoveBoundsVertical.x;
+	}
+
+	Position(pos);
 }
 
 void Player::Hit(PhysEntity * other) {
@@ -120,8 +130,21 @@ void Player::Hit(PhysEntity * other) {
 	mInvincible = true;
 }
 
-bool Player::WasHit() {
-	return mWasHit;
+void Player::Render() {
+	if (mVisible) {
+		if (mAnimating) {
+			mDeathAnimation->Render();
+		}
+		else {
+			mShip->Render();
+		}
+	}
+	
+	PhysEntity::Render(); 
+	
+	for (int i = 0; i < MAX_MISSILES; ++i) {
+		mFmissiles[i]->Render();
+	}
 }
 
 void Player::Update() {
@@ -144,11 +167,6 @@ void Player::Update() {
 		}
 	}
 
-	if (missile != nullptr)
-	{
-		missile->Update();
-	}
-
 	if (mInvincible)
 	{
 		mInvincibilityTimer += mTimer->DeltaTime();
@@ -159,20 +177,12 @@ void Player::Update() {
 			mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Friendly);
 		}
 	}
+
+	for (int i = 0; i < MAX_MISSILES; ++i) {
+		mFmissiles[i]->Update();
+	}
 }
 
-void Player::Render() {
-	if (mVisible) {
-		if (mAnimating) {
-			mDeathAnimation->Render();
-		}
-		else {
-			mShip->Render();
-		}
-	}
-	if (missile != nullptr)
-	{
-		missile->Render();
-	}
-	PhysEntity::Render();
+void Player::Visible(bool visible) {
+	mVisible = visible;
 }
