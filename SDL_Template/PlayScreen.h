@@ -7,6 +7,7 @@
 #include "Scoreboard.h"
 #include "Fmissiles.h"
 #include "Random.h"
+#include <vector>
 
 class PlayScreen : public GameEntity {
 private:

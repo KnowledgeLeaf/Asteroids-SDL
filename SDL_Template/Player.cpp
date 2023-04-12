@@ -160,12 +160,16 @@ void Player::Hit(PhysEntity * other) {
 }
 
 void Player::Render() {
-	if (mVisible) {
-		if (mAnimating) {
-			mDeathAnimation->Render();
-		}
-		else {
-			mShip->Render();
+
+	if (Active())
+	{
+		if (mVisible) {
+			if (mAnimating) {
+				mDeathAnimation->Render();
+			}
+			else {
+				mShip->Render();
+			}
 		}
 	}
 	
@@ -210,6 +214,11 @@ void Player::Update() {
 
 	for (int i = 0; i < MAX_MISSILES; ++i) {
 		mFmissiles[i]->Update();
+	}
+
+	if (Lives() <= 0)
+	{
+		Active(false);
 	}
 }
 

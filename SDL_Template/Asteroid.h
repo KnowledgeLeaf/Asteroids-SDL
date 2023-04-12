@@ -14,9 +14,9 @@ using namespace SDLFramework;
 class Asteroid : public PhysEntity
 {
 private:
-	PlayScreen* mPlayScreen;
 	Timer * mTimer;
 	Random * mRandom;
+	PlayScreen * mPlayScreen;
 	Texture * asteroidTex;
 	
 	float mMoveSpeed;
@@ -33,8 +33,6 @@ public:
 	Asteroid();
 	Asteroid(int size, PlayScreen* playscreen);
 	~Asteroid();
-	
-	
 	
 	void Hit(PhysEntity* other) override;
 

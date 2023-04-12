@@ -10,10 +10,6 @@ PlayScreen::PlayScreen() {
 	mLifeOne = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mLifeTwo = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mLifeThree = new Texture("Asteroids.png", 0, 50, 13, 15);
-	mCluster.push_back(new Asteroid);
-	mCluster.push_back(new Asteroid);
-	mCluster.push_back(new Asteroid);
-	mCluster.push_back(new Asteroid);
 	
 	mTopBar->Parent(this);
 	mPlayerOneScore->Parent(mTopBar);
@@ -34,7 +30,7 @@ PlayScreen::PlayScreen() {
 
 	mTopScore->Score(00);
 	
-for (int i = 0; i < mClusterMax; i++)
+	for (int i = 0; i < mClusterMax; i++)
 	{
 		mCluster.push_back(new Asteroid(1, this));
 
@@ -56,7 +52,7 @@ PlayScreen::~PlayScreen() {
 	mPlayer = nullptr;
 
 	//delete the excess asteroids
-	for (int i = 0; i <= mCluster.size(); i++)
+	for (int i = 0; i <= mCluster.size() - 1; i++)
 	{
 		delete mCluster[i];
 		mCluster[i] = nullptr;
@@ -137,19 +133,16 @@ void PlayScreen::Render() {
 		}
 	}
 	
+	for (auto a : mCluster)
+	{
+		a->Render();
+	}
+
 	mPlayer->Render();
-	
 
 }
 void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 {
-	Asteroid* master;
-	master = new Asteroid();
-	master->Parent(this);
-	master->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
-	master->Active(true);
-	master->SetId(PhysicsManager::Instance()->RegisterEntity(master, PhysicsManager::CollisionLayers::Hostile));
-	
 	if (size == 0)
 	{
 		
@@ -158,11 +151,11 @@ void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 		mCluster.push_back(new Asteroid(2, this));
 		mCluster.back()->Position();
 
-		auto it = std::find(mCluster.begin(), mCluster.end(), master);
+		auto it = std::find(mCluster.begin(), mCluster.end(), asteroid);
 		if (it != mCluster.end())
 		{
 			mCluster.erase(it);
-			delete master;
+			delete asteroid;
 		}
 	}
 	if (size == 1)
@@ -173,11 +166,11 @@ void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 		mCluster.push_back(new Asteroid(2, this));
 		mCluster.back()->Position();
 
-		auto it = std::find(mCluster.begin(), mCluster.end(), master);
+		auto it = std::find(mCluster.begin(), mCluster.end(), asteroid);
 		if (it != mCluster.end())
 		{
 			mCluster.erase(it);
-			delete master;
+			delete asteroid;
 		}
 	}if (size == 2)
 	{
@@ -187,13 +180,12 @@ void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 		mCluster.push_back(new Asteroid(2, this));
 		mCluster.back()->Position();
 
-		auto it = std::find(mCluster.begin(), mCluster.end(), master);
+		auto it = std::find(mCluster.begin(), mCluster.end(), asteroid);
 		if (it != mCluster.end())
 		{
 			mCluster.erase(it);
-			delete master;
+			delete asteroid;
 		}
 	}
-	mCluster.push_back(master);
 }
 

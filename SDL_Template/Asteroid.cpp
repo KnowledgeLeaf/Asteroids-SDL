@@ -1,4 +1,6 @@
 #include "Asteroid.h"
+#include "PlayScreen.h"
+
 Asteroid::Asteroid(){
 	mTimer = Timer::Instance();
 	mRandom = Random::Instance();
@@ -29,9 +31,12 @@ Asteroid::Asteroid(){
 }
 Asteroid::Asteroid(int size, PlayScreen* playScreen)
 {
-	mPlayScreen = playScreen;
 	mTimer = Timer::Instance();
 	mRandom = Random::Instance();
+
+	mPlayScreen = playScreen;
+
+	mSize = size;
 
 	mMoveSpeed = 5.0f;
 
@@ -93,7 +98,7 @@ void Asteroid::HandleMovement()
 
 void Asteroid::Hit(PhysEntity* other)
 {
-	//mPlayScreen->SpawnAsteroid(Position(), mSize, this);
+	mPlayScreen->SpawnAsteroid(mSize, Position(), this);
 }
 
 void Asteroid::Update()
