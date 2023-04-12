@@ -6,7 +6,6 @@ Fmissiles::Fmissiles(){
 	mTexture->Parent(this);
 	mTexture->Position(Vec2_Zero); 
 	mSpeed = 200.0f;
-	Reload();
 	
 	mMoveBoundsHorizontal = Vector2(0.0f, Graphics::SCREEN_WIDTH);
 	mMoveBoundsVertical = Vector2(0.0f, Graphics::SCREEN_HEIGHT);
@@ -14,7 +13,7 @@ Fmissiles::Fmissiles(){
 
 	AddCollider( new BoxCollider(Vector2(5.0f, 5.0f)));
 
-	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::FriendlyProjectiles);
+	Reload();
 }
 
 Fmissiles::~Fmissiles() {
@@ -26,10 +25,12 @@ Fmissiles::~Fmissiles() {
 void Fmissiles::Fire(Vector2 pos) {
 	Position(pos);
 	Active(true);
+	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::FriendlyProjectiles);
 }
 
 void Fmissiles::Reload() 
 {
+	PhysicsManager::Instance()->UnregisterEntity(mId);
 	Active(false);
 }
 
@@ -53,8 +54,11 @@ void Fmissiles::Render() {
 
 void Fmissiles::Hit(PhysEntity* other)
 {
-	std::cout << "HIT!";
-	Reload();
+	if (Active())
+	{
+		std::cout << "MISSILE HIT!";
+		Reload();
+	}
 }
 
 void Fmissiles::HandleMovement() {

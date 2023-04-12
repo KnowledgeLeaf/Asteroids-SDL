@@ -53,7 +53,7 @@ Asteroid::Asteroid(int size, PlayScreen* playScreen)
 	asteroidTex = new Texture("Asteroids.png",mSpritePos[mAsteroidTextRand], 90, 26, 26);
 	asteroidTex->Parent(this);
 	asteroidTex->Position(Vec2_Zero);
-	asteroidTex->Scale(Vector2(3,3));
+	asteroidTex->Scale(Vector2(mSize + 1,mSize + 1));
 
 	mMoveBoundsHorizontal = Vector2(0.0f, Graphics::SCREEN_WIDTH);
 	mMoveBoundsVertical = Vector2(0.0f, Graphics::SCREEN_HEIGHT);
@@ -98,6 +98,8 @@ void Asteroid::HandleMovement()
 
 void Asteroid::Hit(PhysEntity* other)
 {
+	std::cout << "I've Been Hit!";
+	PhysicsManager::Instance()->UnregisterEntity(mId);
 	mPlayScreen->SpawnAsteroid(mSize, Position(), this);
 }
 

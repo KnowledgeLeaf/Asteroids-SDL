@@ -92,7 +92,6 @@ void Player::HandleFiring() {
 				mFmissiles[i]->Fire(Position());
 				mFmissiles[i]->Rotation(Rotation());
 				//mAudio->PlaySFX("SFX/Fire.wav", 0, -1);
-				std::cout << "FIRE!";
 				break;
 			}
 		}
@@ -218,7 +217,7 @@ void Player::Update() {
 
 	if (Lives() <= 0)
 	{
-		Active(false);
+		/*Active(false);*/
 	}
 }
 

@@ -32,7 +32,7 @@ PlayScreen::PlayScreen() {
 	
 	for (int i = 0; i < mClusterMax; i++)
 	{
-		mCluster.push_back(new Asteroid(1, this));
+		mCluster.push_back(new Asteroid(2, this));
 
 		Vector2 position;
 		do {
@@ -143,12 +143,11 @@ void PlayScreen::Render() {
 }
 void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 {
-	if (size == 0)
+	if (size == 2)
 	{
-		
-		mCluster.push_back(new Asteroid(2, this));
+		mCluster.push_back(new Asteroid(1, this));
 		mCluster.back()->Position(position);
-		mCluster.push_back(new Asteroid(2, this));
+		mCluster.push_back(new Asteroid(1, this));
 		mCluster.back()->Position();
 
 		auto it = std::find(mCluster.begin(), mCluster.end(), asteroid);
@@ -160,10 +159,9 @@ void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 	}
 	if (size == 1)
 	{
-
-		mCluster.push_back(new Asteroid(2, this));
+		mCluster.push_back(new Asteroid(0, this));
 		mCluster.back()->Position();
-		mCluster.push_back(new Asteroid(2, this));
+		mCluster.push_back(new Asteroid(0, this));
 		mCluster.back()->Position();
 
 		auto it = std::find(mCluster.begin(), mCluster.end(), asteroid);
@@ -172,14 +170,8 @@ void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 			mCluster.erase(it);
 			delete asteroid;
 		}
-	}if (size == 2)
+	}if (size == 0)
 	{
-
-		mCluster.push_back(new Asteroid(2, this));
-		mCluster.back()->Position();
-		mCluster.push_back(new Asteroid(2, this));
-		mCluster.back()->Position();
-
 		auto it = std::find(mCluster.begin(), mCluster.end(), asteroid);
 		if (it != mCluster.end())
 		{
