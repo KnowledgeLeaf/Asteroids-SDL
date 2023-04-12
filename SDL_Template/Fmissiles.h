@@ -28,6 +28,7 @@ public:
 	void Reload();
 
 	void Hit(PhysEntity* other) override;
+	bool IgnoreCollisions() override;
 
 	void Update() override;
 	void Render() override;

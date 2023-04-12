@@ -13,6 +13,8 @@ Fmissiles::Fmissiles(){
 
 	AddCollider( new BoxCollider(Vector2(5.0f, 5.0f)));
 
+	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::FriendlyProjectiles);
+
 	Reload();
 }
 
@@ -25,12 +27,10 @@ Fmissiles::~Fmissiles() {
 void Fmissiles::Fire(Vector2 pos) {
 	Position(pos);
 	Active(true);
-	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::FriendlyProjectiles);
 }
 
 void Fmissiles::Reload() 
 {
-	PhysicsManager::Instance()->UnregisterEntity(mId);
 	Active(false);
 }
 
@@ -59,6 +59,11 @@ void Fmissiles::Hit(PhysEntity* other)
 		std::cout << "MISSILE HIT!";
 		Reload();
 	}
+}
+
+bool Fmissiles::IgnoreCollisions()
+{
+	return !Active();
 }
 
 void Fmissiles::HandleMovement() {

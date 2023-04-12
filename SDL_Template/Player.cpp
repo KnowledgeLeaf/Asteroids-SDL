@@ -172,8 +172,6 @@ void Player::Render() {
 		}
 	}
 	
-	PhysEntity::Render(); 
-	
 	for (int i = 0; i < MAX_MISSILES; ++i) {
 		mFmissiles[i]->Render();
 	}
