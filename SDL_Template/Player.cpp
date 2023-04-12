@@ -5,6 +5,10 @@ Player::Player() {
 	mInput = InputManager::Instance();
 	mAudio = AudioManager::Instance();
 
+	mRotateSpeed = 150.0f;
+	mVelocity = Vec2_Zero;
+	mMaxVelocity = 500.0f;
+	mAcceleration = 200.0f;
 	mVisible = true;
 	mAnimating = false;
 	mWasHit = false;
@@ -59,6 +63,7 @@ Player::~Player() {
 int Player::Score() {
 	return mScore;
 }
+
 int Player::Lives() {
 	return mLives;
 }
@@ -67,9 +72,11 @@ bool Player::IgnoreCollisions()
 {
 	return !mVisible || mAnimating;
 }
+
 bool Player::WasHit() {
 	return mWasHit;
 }
+
 bool Player::IsAnimating() {
 	return mAnimating;
 }
@@ -93,18 +100,40 @@ void Player::HandleFiring() {
 }
 
 void Player::HandleMovement() {
-	if (mInput->KeyDown(SDL_SCANCODE_RIGHT)) {
-		Rotate(150.0f * mTimer->DeltaTime());
-	}
-	else if (mInput->KeyDown(SDL_SCANCODE_LEFT)) {
-		Rotate(-150.0f * mTimer->DeltaTime());
-	}
-
+	Vector2 impulse = Vec2_Zero;
+	
 	if (mInput->KeyDown(SDL_SCANCODE_UP)) {
-		Translate(-Vec2_Up * mMoveSpeed * mTimer->DeltaTime(), Local);
+		impulse.x = mAcceleration * sin(Rotation() * DEG_TO_RAD) * mTimer->DeltaTime();
+		impulse.y = mAcceleration * -cos(Rotation() * DEG_TO_RAD) * mTimer->DeltaTime();
+		/*animated mImpulsed = true;*/
 	}
-
+	/*else {
+		mImpulsed = false;
+	}*/
+	
+	if (mInput->KeyDown(SDL_SCANCODE_RIGHT)) {
+		Rotate(mRotateSpeed * mTimer->DeltaTime());
+	}
+	
+	if (mInput->KeyDown(SDL_SCANCODE_LEFT)) {
+		Rotate(-mRotateSpeed * mTimer->DeltaTime());
+	}
+	
 	Vector2 pos = Position(Local);
+	
+	mVelocity.x += impulse.x;
+	mVelocity.y += impulse.y;
+	//slowdown bro
+	mVelocity = mVelocity * 0.995f;
+
+	if (mVelocity.Magnitude() > mMaxVelocity) {
+		mVelocity = mVelocity.Normalized() * mMaxVelocity;
+	}
+	
+	pos.x += mVelocity.x * mTimer->DeltaTime();
+	pos.y += mVelocity.y * mTimer->DeltaTime();
+
+	//teleport piece
 	if (pos.x < mMoveBoundsHorizontal.x) {
 		pos.x = mMoveBoundsHorizontal.y;
 	}
@@ -117,15 +146,15 @@ void Player::HandleMovement() {
 	else if (pos.y > mMoveBoundsVertical.y) {
 		pos.y = mMoveBoundsVertical.x;
 	}
-
 	Position(pos);
+
 }
 
 void Player::Hit(PhysEntity * other) {
 	mLives -= 1;
 	mAnimating = true;
 	mDeathAnimation->ResetAnimation();
-	mAudio->PlaySFX("SFX/PlayerExplosion.wav");
+	//mAudio->PlaySFX("SFX/PlayerExplosion.wav");
 	mWasHit = true;
 	mInvincible = true;
 }
@@ -152,6 +181,7 @@ void Player::Update() {
 
 		if (mWasHit) {
 			this->Position(Graphics::SCREEN_HEIGHT / 2, Graphics::SCREEN_WIDTH / 2);
+			mVelocity = 0.0f;
 			PhysicsManager::Instance()->UnregisterEntity(mId);
 			mWasHit = false;
 		}

@@ -16,14 +16,19 @@ private:
 	InputManager * mInput;
 	AudioManager * mAudio;
 	
-	Vector2 mVelocity;
+	
 	Vector2 mMoveBoundsHorizontal;
 	Vector2 mMoveBoundsVertical;
+	Vector2 mVelocity;
 	
 
 	bool mVisible;
 	bool mAnimating;
 	bool mWasHit;
+	bool mInvincible;
+	bool mImpulsed;
+	
+
 	static const int MAX_MISSILES = 4;
 	Fmissiles* mFmissiles[MAX_MISSILES];
 	int mScore;
@@ -33,10 +38,12 @@ private:
 	AnimatedTexture * mDeathAnimation;
 	Collider * mCollider;
 
+	float mRotateSpeed;
 	float mMoveSpeed;
 	float mInvincibilityTime;
 	float mInvincibilityTimer;
-	bool mInvincible;
+	float mAcceleration; 
+	float mMaxVelocity;
 	
 
 private:
