@@ -1,7 +1,35 @@
 #include "Asteroid.h"
+Asteroid::Asteroid(){
+	mTimer = Timer::Instance();
+	mRandom = Random::Instance();
 
-Asteroid::Asteroid()
+	mMoveSpeed = 5.0f;
+
+	mVelocity.x = mRandom->RandomRange(-1.0f, 1.0f);
+	mVelocity.y = mRandom->RandomRange(-1.0f, 1.0f);
+
+	mAsteroidTextRand = mRandom->RandomRange(0, 3);
+
+	mSpritePos.push_back(1);
+	mSpritePos.push_back(32);
+	mSpritePos.push_back(62);
+	mSpritePos.push_back(94);
+
+	asteroidTex = new Texture("Asteroids.png", mSpritePos[mAsteroidTextRand], 90, 26, 26);
+	asteroidTex->Parent(this);
+	asteroidTex->Position(Vec2_Zero);
+	asteroidTex->Scale(Vector2(3, 3));
+
+	mMoveBoundsHorizontal = Vector2(0.0f, Graphics::SCREEN_WIDTH);
+	mMoveBoundsVertical = Vector2(0.0f, Graphics::SCREEN_HEIGHT);
+
+	AddCollider(new BoxCollider(Vector2(16.0f, 67.0f)));
+
+	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Hostile);
+}
+Asteroid::Asteroid(int size, PlayScreen* playScreen)
 {
+	mPlayScreen = playScreen;
 	mTimer = Timer::Instance();
 	mRandom = Random::Instance();
 
@@ -29,8 +57,12 @@ Asteroid::Asteroid()
 
 	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Hostile);
 }
+
 Asteroid::~Asteroid()
 {
+	mTimer = nullptr;
+	mRandom = nullptr;
+
 	asteroidTex = nullptr;
 	delete asteroidTex;
 }
@@ -61,7 +93,7 @@ void Asteroid::HandleMovement()
 
 void Asteroid::Hit(PhysEntity* other)
 {
-	
+	//mPlayScreen->SpawnAsteroid(Position(), mSize, this);
 }
 
 void Asteroid::Update()

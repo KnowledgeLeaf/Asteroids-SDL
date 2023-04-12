@@ -3,14 +3,18 @@
 PlayScreen::PlayScreen() {
 	mTimer = Timer::Instance();
 	mAudio = AudioManager::Instance();
-
+	mRandom = Random::Instance();
 	mTopBar = new GameEntity(Graphics::SCREEN_WIDTH * 0.5f, 80.5f);
 	mPlayerOneScore = new Scoreboard(28);
 	mTopScore = new Scoreboard(16);
 	mLifeOne = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mLifeTwo = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mLifeThree = new Texture("Asteroids.png", 0, 50, 13, 15);
-
+	mCluster.push_back(new Asteroid);
+	mCluster.push_back(new Asteroid);
+	mCluster.push_back(new Asteroid);
+	mCluster.push_back(new Asteroid);
+	
 	mTopBar->Parent(this);
 	mPlayerOneScore->Parent(mTopBar);
 	mTopScore->Parent(mTopBar);
@@ -29,6 +33,19 @@ PlayScreen::PlayScreen() {
 	mLifeThree->Scale(Vector2(2, 2));
 
 	mTopScore->Score(00);
+	
+for (int i = 0; i < mClusterMax; i++)
+	{
+		mCluster.push_back(new Asteroid(1, this));
+
+		Vector2 position;
+		do {
+			position.x = mRandom->RandomRange(0.0f, (float)Graphics::SCREEN_WIDTH);
+			position.y = mRandom->RandomRange(0.0f, (float)Graphics::SCREEN_HEIGHT);
+		} while (position.x > 128 && position.x < 896 && position.y > 128 && position.y < 768);
+
+		mCluster.back()->Position(position.x, position.y);
+	}
 }
 
 PlayScreen::~PlayScreen() {
@@ -38,14 +55,12 @@ PlayScreen::~PlayScreen() {
 	delete mPlayer;
 	mPlayer = nullptr;
 
-	delete mAsteroid1;
-	mAsteroid1 = nullptr;
-	delete mAsteroid2;
-	mAsteroid2 = nullptr; 
-	delete mAsteroid3;
-	mAsteroid3 = nullptr;
-	delete mAsteroid4;
-	mAsteroid4 = nullptr;
+	//delete the excess asteroids
+	for (int i = 0; i <= mCluster.size(); i++)
+	{
+		delete mCluster[i];
+		mCluster[i] = nullptr;
+	}
 
 	delete mTopBar;
 	mTopBar = nullptr;
@@ -70,31 +85,6 @@ void PlayScreen::Start()
 	mPlayer->Position(Graphics::SCREEN_WIDTH * 0.4f, Graphics::SCREEN_HEIGHT * 0.8f);
 	mPlayer->Active(true);
 
-	delete mAsteroid1;
-	mAsteroid1 = new Asteroid();
-	mAsteroid1->Parent(this);
-	mAsteroid1->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
-	mAsteroid1->Active(true);
-	mAsteroid1->SetId(PhysicsManager::Instance()->RegisterEntity(mAsteroid1, PhysicsManager::CollisionLayers::Hostile));
-	delete mAsteroid2;
-	mAsteroid2 = new Asteroid();
-	mAsteroid2->Parent(this);
-	mAsteroid2->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
-	mAsteroid2->Active(true);
-	mAsteroid2->SetId(PhysicsManager::Instance()->RegisterEntity(mAsteroid2, PhysicsManager::CollisionLayers::Hostile));
-	delete mAsteroid3;
-	mAsteroid3 = new Asteroid();
-	mAsteroid3->Parent(this);
-	mAsteroid3->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
-	mAsteroid3->Active(true);
-	mAsteroid3->SetId(PhysicsManager::Instance()->RegisterEntity(mAsteroid3, PhysicsManager::CollisionLayers::Hostile));
-	delete mAsteroid4;
-	mAsteroid4 = new Asteroid();
-	mAsteroid4->Parent(this);
-	mAsteroid4->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
-	mAsteroid4->Active(true);
-	mAsteroid4->SetId(PhysicsManager::Instance()->RegisterEntity(mAsteroid4, PhysicsManager::CollisionLayers::Hostile));
-
 }
 
 void PlayScreen::Update() {
@@ -105,11 +95,29 @@ void PlayScreen::Update() {
 	mLifeTwo->Update();
 	mLifeThree->Update();
 
-	mPlayer->Update();
-	mAsteroid1->Update(); 
-	mAsteroid2->Update();
-	mAsteroid3->Update(); 
-	mAsteroid4->Update();
+	mPlayer->Update(); 
+	
+	for (auto a : mCluster)
+	{
+		a->Update();
+	}
+
+	if (mCluster.empty())
+	{
+		for (int i = 0; i < mClusterMax; i++)
+		{
+			mCluster.push_back(new Asteroid(1, this));
+
+			Vector2 position;
+			do {
+				position.x = mRandom->RandomRange(0.0f, (float)Graphics::SCREEN_WIDTH);
+				position.y = mRandom->RandomRange(0.0f, (float)Graphics::SCREEN_HEIGHT);
+			} while (position.x > 128 && position.x < 896 && position.y > 128 && position.y < 768);
+
+			mCluster.back()->Position(position.x, position.y);
+		}
+	}
+
 }
 
 void PlayScreen::Render() {
@@ -130,9 +138,62 @@ void PlayScreen::Render() {
 	}
 	
 	mPlayer->Render();
-	mAsteroid1->Render();
-	mAsteroid2->Render();
-	mAsteroid3->Render(); 
-	mAsteroid4->Render();
+	
 
 }
+void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
+{
+	Asteroid* master;
+	master = new Asteroid();
+	master->Parent(this);
+	master->Position(Graphics::SCREEN_WIDTH * 0.5f, Graphics::SCREEN_HEIGHT * 0.3f);
+	master->Active(true);
+	master->SetId(PhysicsManager::Instance()->RegisterEntity(master, PhysicsManager::CollisionLayers::Hostile));
+	
+	if (size == 0)
+	{
+		
+		mCluster.push_back(new Asteroid(2, this));
+		mCluster.back()->Position(position);
+		mCluster.push_back(new Asteroid(2, this));
+		mCluster.back()->Position();
+
+		auto it = std::find(mCluster.begin(), mCluster.end(), master);
+		if (it != mCluster.end())
+		{
+			mCluster.erase(it);
+			delete master;
+		}
+	}
+	if (size == 1)
+	{
+
+		mCluster.push_back(new Asteroid(2, this));
+		mCluster.back()->Position();
+		mCluster.push_back(new Asteroid(2, this));
+		mCluster.back()->Position();
+
+		auto it = std::find(mCluster.begin(), mCluster.end(), master);
+		if (it != mCluster.end())
+		{
+			mCluster.erase(it);
+			delete master;
+		}
+	}if (size == 2)
+	{
+
+		mCluster.push_back(new Asteroid(2, this));
+		mCluster.back()->Position();
+		mCluster.push_back(new Asteroid(2, this));
+		mCluster.back()->Position();
+
+		auto it = std::find(mCluster.begin(), mCluster.end(), master);
+		if (it != mCluster.end())
+		{
+			mCluster.erase(it);
+			delete master;
+		}
+	}
+	mCluster.push_back(master);
+}
+

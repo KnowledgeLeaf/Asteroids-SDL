@@ -6,17 +6,17 @@
 #include "Asteroid.h"
 #include "Scoreboard.h"
 #include "Fmissiles.h"
+#include "Random.h"
 
 class PlayScreen : public GameEntity {
 private:
-	Timer * mTimer;
+	Timer * mTimer; 
+	Random* mRandom;
 	AudioManager * mAudio;
 
 	Player * mPlayer;
-	Asteroid * mAsteroid1;
-	Asteroid * mAsteroid2; 
-	Asteroid * mAsteroid3; 
-	Asteroid * mAsteroid4;
+	std::vector<Asteroid*> mCluster;
+
 	Texture* mHiScore;
 	GameEntity* mTopBar;
 	Scoreboard* mPlayerOneScore;
@@ -24,7 +24,8 @@ private:
 	Scoreboard* mTopScore;
 	Texture* mLifeOne;
 	Texture* mLifeTwo;
-	Texture* mLifeThree;
+	Texture* mLifeThree; 
+	static const int mClusterMax = 4;
 
 public:
 	PlayScreen();
@@ -33,6 +34,7 @@ public:
 	void Start();
 	void Update() override;
 	void Render() override;
+	void SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid);
 
 };
 #endif
