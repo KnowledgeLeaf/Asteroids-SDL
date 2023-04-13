@@ -92,8 +92,8 @@ void PlayScreen::Update() {
 	mLifeThree->Update();
 
 	mPlayer->Update(); 
-	if (mPlayer->Lives() == 0) {
-		mTopScore = mPlayerOneScore;
+	if (mPlayer->Lives() < 1) {
+		mTopScore->Score(mScore);
 	}
 	
 	for (auto a : mCluster)
