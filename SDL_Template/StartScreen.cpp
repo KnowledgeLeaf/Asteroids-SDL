@@ -14,7 +14,7 @@ StartScreen::StartScreen() {
 	mPlayerOneScore->Parent(mTopBar);
 	mTopScore->Parent(mTopBar);
 
-	mPlayerOneScore->Position(-Graphics::SCREEN_WIDTH * 0.38f, 40.0f);
+	mPlayerOneScore->Position(-Graphics::SCREEN_WIDTH * 0.30f, 40.0f);
 	mTopScore->Position(Graphics::SCREEN_WIDTH * 0.05f, 40.0f);
 
 	mTopScore->Score(00);

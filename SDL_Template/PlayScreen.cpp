@@ -10,7 +10,7 @@ PlayScreen::PlayScreen() {
 	mLifeOne = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mLifeTwo = new Texture("Asteroids.png", 0, 50, 13, 15);
 	mLifeThree = new Texture("Asteroids.png", 0, 50, 13, 15);
-	
+	mScore = 0;
 	mTopBar->Parent(this);
 	mPlayerOneScore->Parent(mTopBar);
 	mTopScore->Parent(mTopBar);
@@ -18,7 +18,7 @@ PlayScreen::PlayScreen() {
 	mLifeTwo->Parent(mTopBar);
 	mLifeThree->Parent(mTopBar);
 
-	mPlayerOneScore->Position(-Graphics::SCREEN_WIDTH * 0.38f, 40.0f);
+	mPlayerOneScore->Position(-Graphics::SCREEN_WIDTH * 0.30f, 40.0f);
 	mTopScore->Position(Graphics::SCREEN_WIDTH * 0.05f, 40.0f);
 	mLifeOne->Position(-Graphics::SCREEN_WIDTH * 0.42f, 70.0f);
 	mLifeTwo->Position(-Graphics::SCREEN_WIDTH * 0.40f, 70.0f);
@@ -92,6 +92,9 @@ void PlayScreen::Update() {
 	mLifeThree->Update();
 
 	mPlayer->Update(); 
+	if (mPlayer->Lives() == 0) {
+		mTopScore = mPlayerOneScore;
+	}
 	
 	for (auto a : mCluster)
 	{
@@ -111,6 +114,7 @@ void PlayScreen::Update() {
 			} while (position.x > 128 && position.x < 896 && position.y > 128 && position.y < 768);
 
 			mCluster.back()->Position(position.x, position.y);
+			mScore += 1000;
 		}
 	}
 
@@ -145,10 +149,12 @@ void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 {
 	if (size == 2)
 	{
+		mScore += 20;
+		mPlayerOneScore->Score(mScore);
 		mCluster.push_back(new Asteroid(1, this));
 		mCluster.back()->Position(position);
 		mCluster.push_back(new Asteroid(1, this));
-		mCluster.back()->Position();
+		mCluster.back()->Position(position);
 
 		auto it = std::find(mCluster.begin(), mCluster.end(), asteroid);
 		if (it != mCluster.end())
@@ -159,10 +165,12 @@ void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 	}
 	if (size == 1)
 	{
+		mScore += 50;
+		mPlayerOneScore->Score(mScore);
 		mCluster.push_back(new Asteroid(0, this));
-		mCluster.back()->Position();
+		mCluster.back()->Position(position);
 		mCluster.push_back(new Asteroid(0, this));
-		mCluster.back()->Position();
+		mCluster.back()->Position(position);
 
 		auto it = std::find(mCluster.begin(), mCluster.end(), asteroid);
 		if (it != mCluster.end())
@@ -172,6 +180,8 @@ void PlayScreen::SpawnAsteroid(int size, Vector2 position, Asteroid* asteroid)
 		}
 	}if (size == 0)
 	{
+		mScore += 100;
+		mPlayerOneScore->Score(mScore);
 		auto it = std::find(mCluster.begin(), mCluster.end(), asteroid);
 		if (it != mCluster.end())
 		{

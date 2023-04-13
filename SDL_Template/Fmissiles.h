@@ -19,6 +19,8 @@ private:
 	void HandleMovement();
 	Vector2 mMoveBoundsHorizontal;
 	Vector2 mMoveBoundsVertical;
+	float mLifetime;
+	float mCount;
 
 public:
 	Fmissiles();

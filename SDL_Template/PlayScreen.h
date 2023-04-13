@@ -26,6 +26,7 @@ private:
 	Texture* mLifeOne;
 	Texture* mLifeTwo;
 	Texture* mLifeThree; 
+	int mScore;
 	static const int mClusterMax = 4;
 
 public:

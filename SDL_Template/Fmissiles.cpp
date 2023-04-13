@@ -6,7 +6,8 @@ Fmissiles::Fmissiles(){
 	mTexture->Parent(this);
 	mTexture->Position(Vec2_Zero); 
 	mSpeed = 200.0f;
-	
+	mLifetime = 5.0f;
+	mCount = 0.0f;
 	mMoveBoundsHorizontal = Vector2(0.0f, Graphics::SCREEN_WIDTH);
 	mMoveBoundsVertical = Vector2(0.0f, Graphics::SCREEN_HEIGHT);
 	mTexture->Scale(Vector2(3, 3));
@@ -41,6 +42,13 @@ void Fmissiles::Update() {
 		Translate(-Vec2_Up * mSpeed * mTimer->DeltaTime());
 		Vector2 pos = Position();
 		HandleMovement();
+		
+		mCount += mTimer->DeltaTime();
+
+		if (mCount >= mLifetime){
+			Reload();
+			mCount = 0.0f;
+		} 
 	}
 }
 

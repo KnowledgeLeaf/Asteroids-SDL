@@ -70,7 +70,7 @@ int Player::Lives() {
 
 bool Player::IgnoreCollisions()
 {
-	return !mVisible || mAnimating;
+	return !Active();
 }
 
 bool Player::WasHit() {
@@ -215,7 +215,7 @@ void Player::Update() {
 
 	if (Lives() <= 0)
 	{
-		/*Active(false);*/
+		Active(false);
 	}
 }
 
