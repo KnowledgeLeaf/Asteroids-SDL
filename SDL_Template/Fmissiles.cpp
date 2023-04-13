@@ -56,7 +56,6 @@ void Fmissiles::Hit(PhysEntity* other)
 {
 	if (Active())
 	{
-		std::cout << "MISSILE HIT!";
 		Reload();
 	}
 }

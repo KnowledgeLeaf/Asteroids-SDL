@@ -58,7 +58,18 @@ Asteroid::Asteroid(int size, PlayScreen* playScreen)
 	mMoveBoundsHorizontal = Vector2(0.0f, Graphics::SCREEN_WIDTH);
 	mMoveBoundsVertical = Vector2(0.0f, Graphics::SCREEN_HEIGHT);
 
-	AddCollider(new BoxCollider(Vector2(16.0f, 67.0f)));
+	if (mSize == 2)
+	{
+		AddCollider(new BoxCollider(Vector2(17.0f, 68.0f)));
+	}
+	else if (mSize == 1)
+	{
+		AddCollider(new BoxCollider(Vector2(9.0f, 35.0f)));
+	}
+	else if (mSize == 0)
+	{
+		AddCollider(new BoxCollider(Vector2(5.0f, 18.0f)));
+	}
 
 	mId = PhysicsManager::Instance()->RegisterEntity(this, PhysicsManager::CollisionLayers::Hostile);
 }
@@ -98,7 +109,6 @@ void Asteroid::HandleMovement()
 
 void Asteroid::Hit(PhysEntity* other)
 {
-	std::cout << "I've Been Hit!";
 	PhysicsManager::Instance()->UnregisterEntity(mId);
 	mPlayScreen->SpawnAsteroid(mSize, Position(), this);
 }
