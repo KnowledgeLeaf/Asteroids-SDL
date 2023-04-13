@@ -1,5 +1,7 @@
 #include "StartScreen.h"
 
+//Hello Start Screen
+
 StartScreen::StartScreen() {
 	mTimer = Timer::Instance();
 	mInput = InputManager::Instance();
